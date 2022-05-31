@@ -18,4 +18,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Office_1.DataLayer\Office_1.DataLayer.csproj" />
+  </ItemGroup>
+
 </Project>
