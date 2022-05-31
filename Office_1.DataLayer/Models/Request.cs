@@ -55,7 +55,7 @@ public class Request
         return m;
     }
 
-    public string ToStringForQr()
+    protected string ToStringForQr()
     {
         var dict = ToDictionaryForQr();
         var values = dict.Select(p => p.Key + ":" + p.Value);
@@ -63,7 +63,7 @@ public class Request
         return string.Join(" ", values);
     }
 
-    public IDictionary<string, string> ToDictionaryForQr()
+    protected IDictionary<string, string> ToDictionaryForQr()
     {
         return new Dictionary<string, string>
         {
