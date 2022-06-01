@@ -5,7 +5,7 @@ namespace Office_1.DataLayer;
 
 public sealed class ApplicationContext : DbContext
 {
-    
+
     public DbSet<Request> Requests { get; set; }
     public DbSet<Client> Clients { get; set; }
 

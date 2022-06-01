@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Office_1.DataLayer.Services;
+using System.ComponentModel.DataAnnotations;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
@@ -10,35 +9,35 @@ namespace Office_1.DataLayer.Models;
 
 public class Request
 {
-    
+
     public int Id { get; set; }
 
-    [Required] 
-    [Comment("Заявитель")] 
+    [Required]
+    [Comment("Заявитель")]
     public int ClientId { get; set; }
-    
+
     public Client Client { get; set; }
 
     [Required]
     [Comment("ФИО руководителя")]
     public string DirectorName { get; set; }
-    
+
     [Required]
     [Comment("Тематика")]
     public string Subject { get; set; }
-    
+
     [Required]
     [Comment("Содержание")]
     public string Content { get; set; }
-    
+
     [Required]
     [Comment("Резолюция")]
     public string Resolution { get; set; }
-    
+
     [Required]
     [Comment("Статус")]
     public Status Status { get; set; }
-    
+
     [Comment("Примечание")]
     public string Remark { get; set; }
 
@@ -106,7 +105,7 @@ public class Request
         foreach (var row in rows)
         {
             var rowData = row.Split(':', 2);
-            
+
             var key = rowData[0];
             var value = rowData[1];
 
@@ -123,11 +122,11 @@ public class Request
         var id = int.Parse(dict["Идентификатор"]);
         var client = ClientService.GetOrCreateClientByName(dict["ФИО заявителя"], dict["Адрес"]);
         var status = EnumExtension.GetValueFromDescription<Status>(dict["Статус"]);
-        
+
         var request = new Request
         {
             Id = id,
-            
+
             Client = client,
             ClientId = client.Id,
 
@@ -140,7 +139,7 @@ public class Request
         };
 
         RequestService.InsertRequest(request);
-        
+
         return request;
     }
 

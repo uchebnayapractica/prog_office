@@ -1,5 +1,4 @@
 ﻿using Office_1.DataLayer.Models;
-using Office_1.DataLayer.Services;
 using Office_1.UI.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -17,10 +16,6 @@ namespace Office_1.UI.ViewModels
 
         private bool _isSeeFullButtonAvailable;
 
-        private Visibility _isToolTipOn;
-        private Visibility _filtersVisibility;
-
-
         private Request _selectedItem;
 
         public AllRequestsViewModel()
@@ -33,6 +28,7 @@ namespace Office_1.UI.ViewModels
             ShowNew = true;
             ShowInReview = true;
         }
+
         public ObservableCollection<Request> Requests { get; set; }
 
         public bool ShowNew
@@ -71,8 +67,6 @@ namespace Office_1.UI.ViewModels
                 if (value != _showReviewed)
                 {
                     _showReviewed = value;
-                    if (value == true) ShowActiveAvailability = false;
-                    else ShowActiveAvailability = true;
                     OnPropertyChanged(nameof(GridVisibility));
                     GetRequestsCommand.Execute(null);
                 }
@@ -87,9 +81,8 @@ namespace Office_1.UI.ViewModels
                 if (value != _showDeclined)
                 {
                     _showDeclined = value;
-                    if (value == true) ShowCanceledAvailability = false;
-                    else ShowCanceledAvailability = true;
                     OnPropertyChanged(nameof(ShowDeclined));
+                    GetRequestsCommand.Execute(null);
                 }
             }
         }
@@ -120,12 +113,10 @@ namespace Office_1.UI.ViewModels
                     if (value != null)
                     {
                         IsSeeFullButtonAvailable = true;
-                        IsToolTipOn = Visibility.Collapsed;
                     }
                     else
                     {
                         IsSeeFullButtonAvailable = false;
-                        IsToolTipOn = Visibility.Visible;
                     }
                 }
             }

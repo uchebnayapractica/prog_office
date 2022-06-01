@@ -1,19 +1,16 @@
 ﻿using Office_1.UI.Commands;
 using System.Windows;
 using System.Windows.Input;
-using Office_1.DataLayer.Models;
-using Office_1.DataLayer.Services;
 
 
 namespace Office_1.UI.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private Visibility _isToolTipOn;
         private Visibility _filtersVisibility;
-        private Visibility _showNewRequestGridButtonVisibility;
+        private Visibility _changeVisibleGridVisibility;
         private Visibility _addNewRequestVisibility;
-
+        private Visibility _printNewVisibility;
 
         public MainWindowViewModel()
         {
@@ -21,8 +18,7 @@ namespace Office_1.UI.ViewModels
             Clients = new ClientsViewModel();
             NewRequest = new NewRequestViewModel();
             MakeGridVisible = new ChangeVisibleGridCommand(this);
-            IsToolTipOn = Visibility.Visible;
-            ShowNewRequestGridButtonVisibility = Visibility.Visible;
+            ChangeVisibleGridVisibility = Visibility.Visible;
             AddNewRequestVisibility = Visibility.Hidden;
             FiltersVisibility = Visibility.Visible;
 
@@ -31,19 +27,6 @@ namespace Office_1.UI.ViewModels
 
         public ICommand MakeGridVisible { get; set; }
 
-        public Visibility IsToolTipOn
-        {
-            get => _isToolTipOn;
-            set
-            {
-                if (value != _isToolTipOn)
-                {
-                    _isToolTipOn = value;
-
-                    OnPropertyChanged(nameof(IsToolTipOn));
-                }
-            }
-        }
         public Visibility FiltersVisibility
         {
             get => _filtersVisibility;
@@ -57,16 +40,16 @@ namespace Office_1.UI.ViewModels
                 }
             }
         }
-        public Visibility ShowNewRequestGridButtonVisibility
+        public Visibility ChangeVisibleGridVisibility
         {
-            get => _showNewRequestGridButtonVisibility;
+            get => _changeVisibleGridVisibility;
             set
             {
-                if (value != _showNewRequestGridButtonVisibility)
+                if (value != _changeVisibleGridVisibility)
                 {
-                    _showNewRequestGridButtonVisibility = value;
+                    _changeVisibleGridVisibility = value;
 
-                    OnPropertyChanged(nameof(ShowNewRequestGridButtonVisibility));
+                    OnPropertyChanged(nameof(ChangeVisibleGridVisibility));
                 }
             }
         }
@@ -80,6 +63,19 @@ namespace Office_1.UI.ViewModels
                     _addNewRequestVisibility = value;
 
                     OnPropertyChanged(nameof(AddNewRequestVisibility));
+                }
+            }
+        }
+        public Visibility PrintNewVisibility
+        {
+            get => _printNewVisibility;
+            set
+            {
+                if (value != _printNewVisibility)
+                {
+                    _printNewVisibility = value;
+
+                    OnPropertyChanged(nameof(PrintNewVisibility));
                 }
             }
         }

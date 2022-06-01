@@ -22,26 +22,26 @@ public static class ClientService
         {
             return clients.First();
         }
-        
+
         // клиента еще нет в базе
         var c = new Client
         {
             Name = name,
             Address = address
         };
-        
+
         InsertClient(c);
 
         return c;
     }
-    
+
     public static IEnumerable<Client> GetAllClients()
     {
         using var context = new ApplicationContext();
 
         return context.Clients;
     }
-    
+
     public static void InsertClient(Client client)
     {
         using var context = new ApplicationContext();

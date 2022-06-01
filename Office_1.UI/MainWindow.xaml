@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Office_1.UI"
+        xmlns:local="clr-namespace:Office_1.UI" xmlns:viewmodels="clr-namespace:Office_1.UI.ViewModels" 
         mc:Ignorable="d"
         Title="Office_1" Height="450" Width="800"
         >
@@ -29,20 +29,24 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
+
             </Grid.RowDefinitions>
 
 
-            <Button x:Name="NewRequest" Command="{Binding ShowNewRequestGridCommand}" Content="Новая заявка" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" Visibility="{Binding ShowNewRequestGridButtonVisibility}"/>
+            <Button x:Name="NewRequest" Command="{Binding ChangeVisibleGridCommand}" Content="Новая заявка" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" Visibility="{Binding ChangeVisibleGridVisibility}"/>
             <Button x:Name="AddRequest" Command="{Binding AddNewRequestCommand}" Content="Добавить заявку" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" Visibility="{Binding AddNewRequestVisibility}"/>
 
             <Label Name="ShowLabel" Content="Показать:" Grid.Column="1" Grid.Row="2" Margin="0, 15, 0, 15" VerticalAlignment="Bottom" Visibility="{Binding FiltersVisibility}"/>
 
             <StackPanel x:Name="CharacteristicsOfOrdersStackPanel" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="0, 10, 0, 10" Visibility="{Binding FiltersVisibility}">
-                <CheckBox Content="Новые" Margin="0, 5, 0, 0" IsChecked="{Binding ShowNew}"/>
-                <CheckBox Content="На рассмотрении" Margin="0, 5, 0, 0" IsChecked="{Binding ShowInReview}"/>
-                <CheckBox Content="Рассмотренные" Margin="0, 5, 0, 0" IsChecked="{Binding ShowReviewed}"/>
-                <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding ShowDeclined}" />
+                <CheckBox Content="Новые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowNew}"/>
+                <CheckBox Content="На рассмотрении" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowInReview}"/>
+                <CheckBox Content="Рассмотренные" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowReviewed}"/>
+                <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowDeclined}" />
             </StackPanel>
+
+            <Button x:Name="PrintButton" Command="{Binding PrintNewCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" Visibility="{Binding PrintNewVisibility}"/>
         </Grid>
 
         <!--#endregion-->
