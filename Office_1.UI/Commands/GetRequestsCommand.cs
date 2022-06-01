@@ -1,4 +1,5 @@
-﻿using Office_1.BusinessLayer.Models;
+﻿using Office_1.DataLayer.Models;
+using Office_1.DataLayer.Services;
 using Office_1.UI.ViewModels;
 using System.Collections.Generic;
 
@@ -16,11 +17,11 @@ namespace Office_1.UI.Commands
         {
             _requestsViewModel.Requests.Clear();
 
-            var requests = new List<RequestModel>();
+            var requests = new List<Request>();
 
-            requests.AddRange(_requestsViewModel.Service.GetSpecialRequests(_requestsViewModel.ShowNew, _requestsViewModel.ShowInProgress, _requestsViewModel.ShowReviewed, _requestsViewModel.ShowCanceled));
+            requests.AddRange(RequestService.GetSpecialRequests(_requestsViewModel.ShowNew, _requestsViewModel.ShowInReview, _requestsViewModel.ShowReviewed, _requestsViewModel.ShowDeclined));
 
-            foreach (RequestModel request in requests)
+            foreach (Request request in requests)
             {
                 _requestsViewModel.Requests.Add(request);
             }
