@@ -20,7 +20,7 @@ namespace Office_1.UI.ViewModels
 
         public AllRequestsViewModel()
         {
-            GridVisibility = Visibility.Hidden;
+            GridVisibility = Visibility.Visible;
             Requests = new ObservableCollection<Request>();
 
             GetRequestsCommand = new GetRequestsCommand(this);

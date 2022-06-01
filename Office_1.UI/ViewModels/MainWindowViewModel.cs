@@ -17,7 +17,8 @@ namespace Office_1.UI.ViewModels
             AllRequests = new AllRequestsViewModel();
             Clients = new ClientsViewModel();
             NewRequest = new NewRequestViewModel();
-            MakeGridVisible = new ChangeVisibleGridCommand(this);
+            ChangeVisibleGridCommand = new ChangeVisibleGridCommand(this);
+            AddRequestCommand = new AddRequestCommand(NewRequest, this);
             ChangeVisibleGridVisibility = Visibility.Visible;
             AddNewRequestVisibility = Visibility.Hidden;
             FiltersVisibility = Visibility.Visible;
@@ -25,7 +26,9 @@ namespace Office_1.UI.ViewModels
             VisibleVM = AllRequests;
         }
 
-        public ICommand MakeGridVisible { get; set; }
+        public ICommand ChangeVisibleGridCommand { get; set; }
+        public ICommand AddRequestCommand { get; set; }
+
 
         public Visibility FiltersVisibility
         {
