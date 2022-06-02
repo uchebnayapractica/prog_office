@@ -12,11 +12,11 @@ public static class ClientService
         return context.Clients.Where(c => c.Name.StartsWith(prefixOfName)).ToList();
     }
 
-    public static Client GetOrCreateClientByName(string name, string address)
+    public static Client GetOrCreateClientByNameAndAddress(string name, string address)
     {
         using var context = new ApplicationContext();
 
-        var clients = context.Clients.Where(c => c.Name.Equals(name));
+        var clients = context.Clients.Where(c => c.Name.Equals(name) && c.Address.Equals(address));
 
         if (clients.Any()) // клиент уже есть в базе
         {
