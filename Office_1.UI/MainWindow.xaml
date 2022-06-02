@@ -9,103 +9,150 @@
         >
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="75*"/>
-            <ColumnDefinition Width="25*"/>
-        </Grid.ColumnDefinitions>
-
-        <!--#region RightGrid -->
-
-        <Grid x:Name="RightGrid" Grid.Column ="1" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="15*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-
-            </Grid.RowDefinitions>
-
-
-            <Button x:Name="NewRequest" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding NewRequest}" Content="Новая заявка" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" Visibility="{Binding ChangeVisibleGridVisibility}" FontSize="14"/>
-            <Button x:Name="AddRequest" Command="{Binding AddRequestCommand}" CommandParameter="{Binding AllRequests}" Content="Добавить заявку" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" Visibility="{Binding AddNewRequestVisibility}" FontSize="14"/>
-
-            <Label Name="ShowLabel" Content="Показать:" Grid.Column="1" Grid.Row="2" Margin="0, 15, 0, 15" VerticalAlignment="Bottom" Visibility="{Binding FiltersVisibility}" FontSize="14"/>
-
-            <StackPanel x:Name="CharacteristicsOfOrdersStackPanel" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="0, 10, 0, 10" Visibility="{Binding FiltersVisibility}">
-                <CheckBox Content="Новые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowNew}" FontSize="14"/>
-                <CheckBox Content="На рассмотрении" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowInReview}" FontSize="14"/>
-                <CheckBox Content="Рассмотренные" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowReviewed}" FontSize="14"/>
-                <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowDeclined}" FontSize="14"/>
-            </StackPanel>
-
-            <Button x:Name="PrintButton" Command="{Binding PrintNewCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" Visibility="{Binding PrintNewVisibility}" FontSize="14"/>
-        </Grid>
-
-        <!--#endregion-->
-
         <!--#region RequestListGrid -->
 
-        <Grid x:Name="RequestListGrid" Visibility="{Binding AllRequests.Visibility}" Grid.Column ="0" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding Requests}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Director}" Header="Руководитель:" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Subject}" Header="Тема:" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Binding="{Binding Status}" Header="Статус:" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
+        <Grid Visibility="{Binding AllRequests.GridVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition Width="25*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="RightGrid" Grid.Column ="1" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+
+
+                <Button x:Name="NewRequest" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding NewRequest}" Content="Новая заявка" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" FontSize="14"/>
+
+                <Label Name="ShowLabel" Content="Показать:" Grid.Column="1" Grid.Row="2" Margin="0, 15, 0, 15" VerticalAlignment="Bottom" FontSize="14"/>
+
+                <StackPanel x:Name="CharacteristicsOfOrdersStackPanel" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="0, 10, 0, 10">
+                    <CheckBox Content="Новые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowNew}" FontSize="14"/>
+                    <CheckBox Content="На рассмотрении" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowInReview}" FontSize="14"/>
+                    <CheckBox Content="Рассмотренные" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowReviewed}" FontSize="14"/>
+                    <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowDeclined}" FontSize="14"/>
+                </StackPanel>
+
+                <Button x:Name="PrintButton" Command="{Binding PrintNewCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" FontSize="14"/>
+            </Grid>
+
+            <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding Requests}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Director}" Header="Руководитель:" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Subject}" Header="Тема:" IsReadOnly="True"/>
+                        <DataGridCheckBoxColumn Binding="{Binding Status}" Header="Статус:" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            <Grid/>
         </Grid>
 
+        </Grid>
         <!--#endregion-->
 
         <!--#region NewRequestGrid-->
-        
-        <Grid Name ="NewRequestGrid" Visibility="{Binding NewRequestGridVisibility}" Grid.RowSpan="2" Background="AliceBlue">
+
+        <Grid Visibility="{Binding NewRequest.GridVisibility}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition Width="25*"/>
             </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="15*"/>
-            </Grid.RowDefinitions>
-
-            <Label Name ="ClientLabel" Content="Клиент:" Grid.Column="1" Grid.Row="1" Margin="15, 15, 15, 15" FontSize="15"/>
-            <ComboBox Name ="ClientComboBox" Grid.Column="2" Grid.Row="1" Margin="15, 15, 15, 15"/>
-
-            <Label Name ="ClientAdressLabel" Content="Адрес клиента:" Grid.Column="1" Grid.Row="2" Margin="15, 15, 15, 15" FontSize="15"/>
-            <TextBox Name ="ClientAdressTextBox" Grid.Column="2" Grid.Row="2" Margin="15, 15, 15, 15" />
-
-            <Label Name ="DirectorLabel" Content="Руководитель:" Grid.Column="1" Grid.Row="3" Margin="15, 15, 15, 15" FontSize="15"/>
-            <TextBox Name ="DirectorTextBox" Grid.Column="2" Grid.Row="3" Margin="15, 15, 15, 15"/>
-
-            <Label Name ="SubjectLabel" Content="Тема:" Grid.Column="1" Grid.Row="4" Margin="15, 15, 15, 15" FontSize="15"/>
-            <TextBox Name ="SubjectTextBox" Grid.Column="2" Grid.Row="4" Margin="15, 15, 15, 15"/>
-
-            <Label Name ="ContentLabel" Content="Содержание:" Grid.Column="1" Grid.Row="5" Margin="15, 15, 15, 15" FontSize="15"/>
-            <TextBox Name ="ContentTextBox" Grid.Column="2" Grid.Row="5" Margin="15, 15, 15, 15"/>
             
+            <Grid x:Name="RightAddGrid" Grid.Column ="1" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+
+                <Button x:Name="AddRequest" Command="{Binding AddRequestCommand}" CommandParameter="{Binding AllRequests}" Content="Добавить заявку" Grid.Column="1" Grid.Row="2" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="ToMain" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding AllRequests}" Content="Назад" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
+
+
+            </Grid>
+
+            <Grid Name ="NewRequestGrid" Grid.Column="0" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*"/>
+                    
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="50*"/>
+                    
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name ="ClientLabel" Content="Клиент:" Grid.Column="1" Grid.Row="1" Margin="15, 15, 15, 15" FontSize="15"/>
+                <TextBox Name ="ClientComboBox" Text="{Binding NewRequest.ClientName}" Grid.Column="2" Grid.Row="1" Margin="15, 15, 15, 15"/>
+
+                <Label Name ="ClientAdressLabel" Content="Адрес клиента:" Grid.Column="1" Grid.Row="2" Margin="15, 15, 15, 15" FontSize="15"/>
+                <TextBox Name ="ClientAdressTextBox" Text="{Binding NewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="15, 15, 15, 15" />
+
+                <DataGrid x:Name="ClientsDataGrid" ItemsSource="{Binding NewRequest.Clients}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="15, 15, 15, 15" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True" ColumnWidth="*" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Client.Name}" Header="ФИО Клиента:" IsReadOnly="True" Width="40*"/>
+                        <DataGridTextColumn Binding="{Binding Client.Address}" Header="Адрес:" IsReadOnly="True" Width="70*"/>
+                        <DataGridTemplateColumn Header="Выбрать ->" Width="20*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Name ="ChooseButton" Command="{Binding NewRequest.ChooseClientCommand}" CommandParameter="{Binding Client}" >Выбрать</Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+
+                <Label Name ="DirectorLabel" Content="Руководитель:" Grid.Column="1" Grid.Row="4" Margin="15, 15, 15, 15" FontSize="15"/>
+                <TextBox Name ="DirectorTextBox" Text="{Binding NewRequest.DirectorName}" Grid.Column="2" Grid.Row="4" Margin="15, 15, 15, 15"/>
+
+                <Label Name ="SubjectLabel" Content="Тема:" Grid.Column="1" Grid.Row="5" Margin="15, 15, 15, 15" FontSize="15"/>
+                <TextBox Name ="SubjectTextBox" Text="{Binding NewRequest.Subject}" Grid.Column="2" Grid.Row="5" Margin="15, 15, 15, 15"/>
+
+                <Label Name ="ContentLabel" Content="Содержание:" Grid.Column="1" Grid.Row="6" Margin="15, 15, 15, 15" FontSize="15"/>
+                <TextBox Name ="ContentTextBox" Text="{Binding NewRequest.Content}" Grid.Column="2" Grid.Row="6" Margin="15, 15, 15, 15"/>
+
+            </Grid>
+
         </Grid>
 
         <!--#endregion-->
-        
     </Grid>
 </Window>

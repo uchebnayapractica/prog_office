@@ -1,4 +1,5 @@
 ﻿using Office_1.DataLayer.Models;
+using Office_1.UI.Commands;
 using System.Windows;
 
 
@@ -12,16 +13,11 @@ namespace Office_1.UI.ViewModels
 
         private string _content;
 
-        private string _resolution;
-
-        private Status _status;
-
-        private string _remark;
-
 
         public NewRequestViewModel()
         {
             GridVisibility = Visibility.Hidden;
+            ChooseClientCommand = new ChooseClientCommand(this);
         }
 
         public string DirectorName
@@ -63,44 +59,7 @@ namespace Office_1.UI.ViewModels
             }
         }
 
-        public string Resolution
-        {
-            get => _resolution;
-            set
-            {
-                if (value != _resolution)
-                {
-                    _resolution = value;
-                    OnPropertyChanged(nameof(Resolution));
-                }
-            }
-        }
-
-        public Status Status
-        {
-            get => _status;
-            set
-            {
-                if (value != _status)
-                {
-                    _status = value;
-                    OnPropertyChanged(nameof(Status));
-                }
-            }
-        }
-
-        public string Remark
-        {
-            get => _remark;
-            set
-            {
-                if (value != _remark)
-                {
-                    _remark = value;
-                    OnPropertyChanged(nameof(Remark));
-                }
-            }
-        }
+        ChooseClientCommand ChooseClientCommand { get; set; }
 
     }
 }

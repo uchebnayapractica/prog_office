@@ -14,6 +14,8 @@ namespace Office_1.UI.ViewModels
 
         private string _clientName;
 
+        private string _clientAddress;
+
         public TabViewModel()
         {
             Clients = new ObservableCollection<Client>();
@@ -56,6 +58,22 @@ namespace Office_1.UI.ViewModels
                 {
                     _clientName = value;
                     OnPropertyChanged(nameof(ClientName));
+                    if (value != string.Empty)
+                        GetClientsByPrefixOfNameCommand.Execute(null);
+                    else GetClientsCommand.Execute(null);
+                }
+            }
+        }
+
+        public string ClientAddress
+        {
+            get => _clientAddress;
+            set
+            {
+                if (value != _clientAddress)
+                {
+                    _clientAddress = value;
+                    OnPropertyChanged(nameof(ClientAddress));
                 }
             }
         }

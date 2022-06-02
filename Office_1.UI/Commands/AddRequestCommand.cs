@@ -20,20 +20,37 @@ namespace Office_1.UI.Commands
         {
             TabViewModel vm = (TabViewModel)viewModel;
 
-            Request request = new Request
+            if ((_requestsViewModel.Client != null || 
+                (_requestsViewModel.ClientName != string.Empty && _requestsViewModel.ClientAddress != string.Empty))&&
+                _requestsViewModel.DirectorName != string.Empty &&
+                _requestsViewModel.Subject != string.Empty && 
+                _requestsViewModel.Content != string.Empty)
             {
-                Client = _requestsViewModel.Client,
-                DirectorName = _requestsViewModel.DirectorName,
-                Subject = _requestsViewModel.Subject,
-                Content = _requestsViewModel.Content,
-                Resolution = _requestsViewModel.Resolution,
-                Status = _requestsViewModel.Status,
-                Remark = _requestsViewModel.Remark
-            };
+                if (_requestsViewModel.Client == null)
+                {
+                    //Make new Client
+                    _requestsViewModel.Client = new Client
+                    {
+                        Name = _requestsViewModel.ClientName,
+                        Address = _requestsViewModel.ClientAddress
+                    };
+                }
 
-            RequestService.InsertRequest(request);
+                Request request = new Request
+                {
+                    Client = _requestsViewModel.Client,
+                    DirectorName = _requestsViewModel.DirectorName,
+                    Subject = _requestsViewModel.Subject,
+                    Content = _requestsViewModel.Content,
+                };
 
-            _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
+                //RequestService.InsertRequest(request);
+
+                _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
+            } else
+            {
+                MessageBox.Show("Заполните все поля!");
+            }
         }
     }
 }
