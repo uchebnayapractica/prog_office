@@ -5,11 +5,11 @@ namespace Office_1.DataLayer.Services;
 public static class ClientService
 {
 
-    public static IEnumerable<Client> GetClientsByPrefixOfName(string prefixOfName)
+    public static IList<Client> GetClientsByPrefixOfName(string prefixOfName)
     {
         using var context = new ApplicationContext();
 
-        return context.Clients.Where(c => c.Name.StartsWith(prefixOfName));
+        return context.Clients.Where(c => c.Name.StartsWith(prefixOfName)).ToList();
     }
 
     public static Client GetOrCreateClientByName(string name, string address)
@@ -34,12 +34,12 @@ public static class ClientService
 
         return c;
     }
-
-    public static IEnumerable<Client> GetAllClients()
+    
+    public static IList<Client> GetAllClients()
     {
         using var context = new ApplicationContext();
 
-        return context.Clients;
+        return context.Clients.ToList();
     }
 
     public static void InsertClient(Client client)
@@ -47,6 +47,7 @@ public static class ClientService
         using var context = new ApplicationContext();
 
         context.Clients.Add(client);
+        context.SaveChanges();
     }
 
 }

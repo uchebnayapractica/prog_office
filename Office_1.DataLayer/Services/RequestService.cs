@@ -5,7 +5,7 @@ namespace Office_1.DataLayer.Services
     public static class RequestService
     {
 
-        public static IEnumerable<Request> GetSpecialRequests(bool showCreated, bool showInReview, bool showReviewed,
+        public static IList<Request> GetSpecialRequests(bool showCreated, bool showInReview, bool showReviewed,
             bool showDeclined)
         {
             using var context = new ApplicationContext();
@@ -32,14 +32,14 @@ namespace Office_1.DataLayer.Services
                 query = query.Where(r => r.Status == Status.Declined);
             }
 
-            return query;
+            return query.ToList();
         }
 
-        public static IEnumerable<Request> GetAllRequests()
+        public static IList<Request> GetAllRequests()
         {
             using var context = new ApplicationContext();
 
-            return context.Requests;
+            return context.Requests.ToList();
         }
 
         public static void UpdateRequest(Request request)
@@ -47,6 +47,7 @@ namespace Office_1.DataLayer.Services
             using var context = new ApplicationContext();
 
             context.Requests.Update(request);
+            context.SaveChanges();
         }
 
         public static void InsertRequest(Request request)
@@ -54,6 +55,7 @@ namespace Office_1.DataLayer.Services
             using var context = new ApplicationContext();
 
             context.Requests.Add(request);
+            context.SaveChanges();
         }
 
     }
