@@ -14,4 +14,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Office_1.DataLayer\Office_1.DataLayer.csproj" />
+  </ItemGroup>
+
 </Project>

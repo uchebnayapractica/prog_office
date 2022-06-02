@@ -42,17 +42,18 @@ public class Request
     [Comment("Примечание")]
     public string Remark { get; set; }
 
-    public BitMatrix GetQr(int width, int height)
+    public (BitMatrix qrImage, string qrString) GetQr(int width, int height)
     {
         var writer = new QRCodeWriter();
 
-        var m = writer.encode(ToStringForQr(), BarcodeFormat.QR_CODE, width, height);
+        var stringForQr = ToStringForQr();
+        var m = writer.encode(stringForQr, BarcodeFormat.QR_CODE, width, height);
         if (m is null)
         {
             throw new NullReferenceException("BitMatrix is null");
         }
 
-        return m;
+        return (m, stringForQr);
     }
 
     protected string ToStringForQr()
