@@ -12,10 +12,8 @@ public class Request
 
     public int Id { get; set; }
 
-    [Required]
+    [Required] 
     [Comment("Заявитель")]
-    public int ClientId { get; set; }
-
     public Client Client { get; set; }
 
     [Required]
@@ -121,16 +119,13 @@ public class Request
         CheckQrDictionary(dict);
 
         var id = int.Parse(dict["Идентификатор"]);
-        var client = ClientService.GetOrCreateClientByName(dict["ФИО заявителя"], dict["Адрес"]);
+        var client = ClientService.GetOrCreateClientByNameAndAddress(dict["ФИО заявителя"], dict["Адрес"]);
         var status = EnumExtension.GetValueFromDescription<Status>(dict["Статус"]);
 
         var request = new Request
         {
             Id = id,
-
-            Client = client,
-            ClientId = client.Id,
-
+            
             DirectorName = dict["ФИО руководителя"],
             Subject = dict["Тематика"],
             Content = dict["Содержание"],
@@ -139,8 +134,8 @@ public class Request
             Remark = dict["Примечание"]
         };
 
-        RequestService.InsertRequest(request);
-
+        RequestService.InsertRequest(request, client);
+        
         return request;
     }
 

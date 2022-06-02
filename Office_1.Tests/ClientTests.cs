@@ -55,7 +55,7 @@ namespace Office_1.Tests
         [Test]
         public void TestGetOrCreateClient()
         {
-            var client = ClientService.GetOrCreateClientByName("Иванов Иван Иванович", "улица Пушкина, дом Колотушкина");
+            var client = ClientService.GetOrCreateClientByNameAndAddress("Иванов Иван Иванович", "улица Пушкина, дом Колотушкина");
 
             var allClients = ClientService.GetAllClients();
             Assert.AreEqual(1, allClients.Count); // проверяем что клиент создался 
@@ -65,19 +65,27 @@ namespace Office_1.Tests
 
             // теперь клиент должен быть просто получен, а не создан
             
-            var sameClient = ClientService.GetOrCreateClientByName(client.Name, client.Address);
+            var sameClient = ClientService.GetOrCreateClientByNameAndAddress(client.Name, client.Address);
             Assert.AreEqual(client.Id, sameClient.Id);
             
             allClients = ClientService.GetAllClients();
             Assert.AreEqual(1, allClients.Count); // проверяем что клиент не создавался 
+
+            // теперь клиент должен быть создан, ведь адрес изменился
+            
+            var anotherClient = ClientService.GetOrCreateClientByNameAndAddress(client.Name, client.Address + "2");
+            Assert.AreNotEqual(client.Id, anotherClient.Id);
+            
+            allClients = ClientService.GetAllClients();
+            Assert.AreEqual(2, allClients.Count); // проверяем что клиент не создавался 
         }
 
-        private static Client MakeSomeClient()
+        public static Client MakeSomeClient(string name = "Иванов Иван Иванович", string address = "улица Пушкина, дом Колотушкина")
         {
             var client = new Client
             {
-                Name = "Иванов Иван Иванович",
-                Address = "улица Пушкина, дом Колотушкина"
+                Name = name,
+                Address = address
             };
             
             ClientService.InsertClient(client);

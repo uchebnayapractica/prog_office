@@ -17,14 +17,17 @@ public sealed class ApplicationContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("FileName=Application.db");
+        //optionsBuilder.UseSqlite("DataSource=/Users/noliktop/Desktop/test_db/Application.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        /*modelBuilder.Entity<Request>()
+        modelBuilder.Entity<Request>()
             .HasOne(request => request.Client)
-            .WithMany(client => client.Requests)
-            .HasForeignKey(request => request.IdClient);*/
+            .WithMany(client => client.Requests);
+
+        modelBuilder.Entity<Client>()
+            .HasIndex(p => new { p.Name, p.Address }).IsUnique();
     }
 
 }
