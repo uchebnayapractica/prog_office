@@ -35,6 +35,24 @@ public class RequestTests
     }
 
     [Test]
+    public void TestUpdateRequest()
+    {
+        var request = MakeSomeRequest(Status.Created);
+
+        request.Status = Status.InReview;
+        RequestService.UpdateRequest(request);
+
+        var gotRequest = RequestService.GetAllRequests().First();
+        Assert.AreEqual(Status.InReview, gotRequest.Status);
+
+        gotRequest.Status = Status.Reviewed;
+        RequestService.UpdateRequest(gotRequest);
+        
+        gotRequest = RequestService.GetAllRequests().First();
+        Assert.AreEqual(Status.Reviewed, gotRequest.Status);
+    }
+
+    [Test]
     public void TestGetSpecialRequests()
     {
         var requestStatusCreated = MakeSomeRequest(Status.Created, "Иван", "улица Пушкина");
