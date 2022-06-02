@@ -5,11 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office_1.UI", "Office_1.UI\Office_1.UI.csproj", "{E559A851-8F78-4995-89AD-44D2ECE03F10}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office_1.BusinessLayer", "Office_1.BusinessLayer\Office_1.BusinessLayer.csproj", "{A0C0FF55-6285-4E9A-A13C-1AC1806F3710}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office_1.Tests", "Office_1.Tests\Office_1.Tests.csproj", "{C01628F8-5D4D-4D66-B57C-804991086C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office_1.DataLayer", "Office_1.DataLayer\Office_1.DataLayer.csproj", "{0B574EEB-6130-41F5-9816-58DF0441970D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office_1.DataLayer", "Office_1.DataLayer\Office_1.DataLayer.csproj", "{0B574EEB-6130-41F5-9816-58DF0441970D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{E559A851-8F78-4995-89AD-44D2ECE03F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E559A851-8F78-4995-89AD-44D2ECE03F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E559A851-8F78-4995-89AD-44D2ECE03F10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0C0FF55-6285-4E9A-A13C-1AC1806F3710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0C0FF55-6285-4E9A-A13C-1AC1806F3710}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0C0FF55-6285-4E9A-A13C-1AC1806F3710}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0C0FF55-6285-4E9A-A13C-1AC1806F3710}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C01628F8-5D4D-4D66-B57C-804991086C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C01628F8-5D4D-4D66-B57C-804991086C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C01628F8-5D4D-4D66-B57C-804991086C94}.Release|Any CPU.ActiveCfg = Release|Any CPU

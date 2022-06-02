@@ -1,5 +1,5 @@
-﻿using Office_1.BusinessLayer.Models;
-using Office_1.BusinessLayer.Services;
+﻿using Office_1.DataLayer.Models;
+using Office_1.UI.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,34 +10,26 @@ namespace Office_1.UI.ViewModels
     public class AllRequestsViewModel : TabViewModel
     {
         private bool _showNew;
-        private bool _showInProgress;
+        private bool _showInReview;
         private bool _showReviewed;
-        private bool _showCanceled;
+        private bool _showDeclined;
 
-        private bool _showCanceledAvailability;
-        private bool _showActiveAvailability;
-        private bool _areButtonsAvailable;
+        private bool _isSeeFullButtonAvailable;
 
-        private Visibility _isToolTipOn;
+        private Request _selectedItem;
 
-        private RequestModel _selectedItem;
         public AllRequestsViewModel()
         {
-            GridVisibility = Visibility.Hidden;
-            ShowActiveAvailability = true;
-            ShowCanceledAvailability = true;
-            Service = new RequestService();
-            Requests = new ObservableCollection<RequestModel>();
-            IsToolTipOn = Visibility.Visible;
+            GridVisibility = Visibility.Visible;
+            Requests = new ObservableCollection<Request>();
 
-            GetOrdersCommand = new GetOrdersCommand(this);
-            CheckIfShouldOpenAddingPaymentGrid = new CheckIfShouldOpenAddingPaymentGrid(Payment, this);
-            CancelOrderCommand = new CancelOrderCommand(this);
+            GetRequestsCommand = new GetRequestsCommand(this);
 
             ShowNew = true;
-            ShowInProgress = true;
+            ShowInReview = true;
         }
-        public ObservableCollection<RequestModel> Requests { get; set; }
+
+        public ObservableCollection<Request> Requests { get; set; }
 
         public bool ShowNew
         {
@@ -48,21 +40,21 @@ namespace Office_1.UI.ViewModels
                 {
                     _showNew = value;
                     OnPropertyChanged(nameof(ShowNew));
-                    GetOrdersCommand.Execute(null);
+                    GetRequestsCommand.Execute(null);
                 }
             }
         }
 
-        public bool ShowInProgress
+        public bool ShowInReview
         {
-            get => _showInProgress;
+            get => _showInReview;
             set
             {
-                if (value != _showInProgress)
+                if (value != _showInReview)
                 {
-                    _showInProgress = value;
-                    OnPropertyChanged(nameof(ShowInProgress));
-                    GetOrdersCommand.Execute(null);
+                    _showInReview = value;
+                    OnPropertyChanged(nameof(ShowInReview));
+                    GetRequestsCommand.Execute(null);
                 }
             }
         }
@@ -75,83 +67,40 @@ namespace Office_1.UI.ViewModels
                 if (value != _showReviewed)
                 {
                     _showReviewed = value;
-                    if (value == true) ShowActiveAvailability = false;
-                    else ShowActiveAvailability = true;
                     OnPropertyChanged(nameof(GridVisibility));
-                    GetOrdersCommand.Execute(null);
+                    GetRequestsCommand.Execute(null);
                 }
             }
         }
 
-        public bool ShowCanceled
+        public bool ShowDeclined
         {
-            get => _showCanceled;
+            get => _showDeclined;
             set
             {
-                if (value != _showCanceled)
+                if (value != _showDeclined)
                 {
-                    _showCanceled = value;
-                    if (value == true) ShowCanceledAvailability = false;
-                    else ShowCanceledAvailability = true;
-                    OnPropertyChanged(nameof(ShowCanceled));
+                    _showDeclined = value;
+                    OnPropertyChanged(nameof(ShowDeclined));
+                    GetRequestsCommand.Execute(null);
                 }
             }
         }
 
-        public bool ShowCanceledAvailability
+        public bool IsSeeFullButtonAvailable
         {
-            get => _showCanceledAvailability;
+            get => _isSeeFullButtonAvailable;
             set
             {
-                if (value != _showCanceledAvailability)
+                if (value != _isSeeFullButtonAvailable)
                 {
-                    _showCanceledAvailability = value;
-                    OnPropertyChanged(nameof(ShowCanceledAvailability));
+                    _isSeeFullButtonAvailable = value;
+                    OnPropertyChanged(nameof(IsSeeFullButtonAvailable));
                 }
             }
         }
 
-        public bool ShowActiveAvailability
-        {
-            get => _showActiveAvailability;
-            set
-            {
-                if (value != _showActiveAvailability)
-                {
-                    _showActiveAvailability = value;
-                    OnPropertyChanged(nameof(ShowActiveAvailability));
-                }
-            }
-        }
-
-        public bool AreButtonsAvailable
-        {
-            get => _areButtonsAvailable;
-            set
-            {
-                if (value != _areButtonsAvailable)
-                {
-                    _areButtonsAvailable = value;
-                    OnPropertyChanged(nameof(AreButtonsAvailable));
-                }
-            }
-        }
-
-        public Visibility IsToolTipOn
-        {
-            get => _isToolTipOn;
-            set
-            {
-                if (value != _isToolTipOn)
-                {
-                    _isToolTipOn = value;
-
-                    OnPropertyChanged(nameof(IsToolTipOn));
-                }
-            }
-        }
-
-        public RequestModel SelectedItem
+        public Request SelectedItem
         {
             get => _selectedItem;
             set
@@ -163,26 +112,17 @@ namespace Office_1.UI.ViewModels
                     OnPropertyChanged(nameof(SelectedItem));
                     if (value != null)
                     {
-                        AreButtonsAvailable = true;
-                        IsToolTipOn = Visibility.Collapsed;
+                        IsSeeFullButtonAvailable = true;
                     }
                     else
                     {
-                        AreButtonsAvailable = false;
-                        IsToolTipOn = Visibility.Visible;
+                        IsSeeFullButtonAvailable = false;
                     }
                 }
             }
         }
 
-        public ICommand GetOrdersCommand { get; set; }
+        public ICommand GetRequestsCommand { get; set; }
 
-        public ICommand AddPaymentCommand { get; set; }
-
-        public ICommand CheckIfShouldOpenAddingPaymentGrid { get; set; }
-
-        public ICommand CancelOrderCommand { get; set; }
-
-        public RequestService Service;
     }
 }
