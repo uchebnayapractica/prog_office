@@ -8,6 +8,8 @@ public sealed class ApplicationContext : DbContext
 
     public DbSet<Request> Requests { get; set; }
     public DbSet<Client> Clients { get; set; }
+    
+    public DbSet<Settings> Settings { get; set; }
 
     public ApplicationContext()
     {
