@@ -74,8 +74,10 @@ public static class RequestImportExportManager
         
         foreach (var request in requests)
         {
-            var filePa = path + GenerateName(request);
-            RequestPrinter.PrintIntoFile(filePa, request, true);
+            var filePath = path + GenerateName(request);
+            RequestPrinter.PrintIntoFile(filePath, request, true);
+            
+            filesPaths.Add(filePath);
         }
 
         return filesPaths;
@@ -83,7 +85,7 @@ public static class RequestImportExportManager
 
     private static string GenerateName(Request request)
     {
-        return "request_" + request.Id + ".jpg";
+        return "обращение_" + request.Client.Name.Replace(' ', '_') + "_N" + request.Id + ".jpg";
     }
     
 }
