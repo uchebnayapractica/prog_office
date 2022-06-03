@@ -41,14 +41,14 @@ namespace Office_1.DataLayer.Services
             var statuses = GetStatuses(showCreated, showInReview, showReviewed, showDeclined);
             var query = context.Requests.Where(r => statuses.Contains(r.Status));
 
-            return query.ToList();
+            return query.Include(r => r.Client).ToList();
         }
 
         public static IList<Request> GetAllRequests()
         {
             using var context = new ApplicationContext();
 
-            return context.Requests.ToList();
+            return context.Requests.Include(r => r.Client).ToList();
         }
 
         public static void UpdateRequest(Request request)

@@ -15,10 +15,17 @@ namespace Office_1.UI.Commands
 
         public override void Execute(object client)
         {
-            Client ChosenClient = (Client)client;
-            _requestsViewModel.Client = ChosenClient;
-            _requestsViewModel.ClientName = ChosenClient.Name;
-            _requestsViewModel.ClientAddress = ChosenClient.Address;
+            if (_requestsViewModel.SelectedItem != null)
+            {
+                Client ChosenClient = _requestsViewModel.SelectedItem;
+
+                _requestsViewModel.Client = ChosenClient;
+                _requestsViewModel.ClientName = ChosenClient.Name;
+                _requestsViewModel.ClientAddress = ChosenClient.Address;
+            } else
+            {
+                MessageBox.Show("Для начала выберите нужного клиента в таблице, кликнув на строчку с ним!");
+            }
         }
     }
 }

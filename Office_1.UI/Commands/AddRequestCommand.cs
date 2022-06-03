@@ -59,6 +59,8 @@ namespace Office_1.UI.Commands
                 _requestsViewModel.Subject = string.Empty;
                 _requestsViewModel.Content = string.Empty;
 
+                //Обновляем список
+                _mainWindowViewModel.AllRequests.GetRequestsCommand.Execute(null);
                 _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
             } else
             {
