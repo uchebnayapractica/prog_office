@@ -48,7 +48,7 @@ namespace Office_1.DataLayer.Services
         {
             using var context = new ApplicationContext();
 
-            return context.Requests.ToList();
+            return context.Requests.Include(r => r.Client).ToList();
         }
 
         public static void UpdateRequest(Request request)
