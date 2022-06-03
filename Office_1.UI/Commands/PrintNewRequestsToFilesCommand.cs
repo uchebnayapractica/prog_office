@@ -1,4 +1,5 @@
-﻿using Office_1.UI.ViewModels;
+﻿using Office_1.DataLayer;
+using Office_1.UI.ViewModels;
 
 
 namespace Office_1.UI.Commands
@@ -14,7 +15,7 @@ namespace Office_1.UI.Commands
 
         public override void Execute(object parameter)
         {
-
+            RequestImportExportManager.ExportCreatedRequests();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Office_1.UI.Commands;
+﻿using Office_1.DataLayer.Models;
+using Office_1.DataLayer.Services;
+using Office_1.UI.Commands;
 using System.Windows.Input;
 
 
@@ -19,6 +21,10 @@ namespace Office_1.UI.ViewModels
             PrintNewRequestsToFilesCommand = new PrintNewRequestsToFilesCommand(this);
             GetNewRequestsFromFilesCommand = new GetNewRequestsFromFilesCommand(this);
 
+            settings = SettingsService.GetSettings();
+            _inputPath = settings.ImportPath;
+            _outputPath = settings.ExportPath;
+
             VisibleVM = AllRequests;
         }
 
@@ -29,6 +35,7 @@ namespace Office_1.UI.ViewModels
         public ICommand PrintNewRequestsToFilesCommand { get; set; }
         public ICommand GetNewRequestsFromFilesCommand { get; set; }
 
+        //Откуда брать файлы
         public string InputPath
         {
             get => _inputPath;
@@ -39,10 +46,16 @@ namespace Office_1.UI.ViewModels
                     _inputPath = value;
                     OnPropertyChanged(nameof(InputPath));
                     //ChangeInputPath in db
+                    if (value != null)
+                    {
+                        settings.ImportPath = _inputPath;
+                        SettingsService.SaveSettings(settings);
+                    }
                 }
             }
         }
 
+        //Куда сохранять файлы
         public string OutputPath
         {
             get => _outputPath;
@@ -53,10 +66,16 @@ namespace Office_1.UI.ViewModels
                     _outputPath = value;
                     OnPropertyChanged(nameof(OutputPath));
                     //ChangeOutputPath in db
+                    if (value != null)
+                    {
+                        settings.ExportPath = _outputPath;
+                        SettingsService.SaveSettings(settings);
+                    }
                 }
             }
         }
 
+        public Settings settings { get; set; }
         public TabViewModel VisibleVM { get; set; }
         public NewRequestViewModel NewRequest { get; set; }
         public AllRequestsViewModel AllRequests { get; set; }
