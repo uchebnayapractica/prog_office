@@ -30,14 +30,14 @@ public class SettingsService
     {
         using var context = new ApplicationContext();
 
-        if (!settings.ExportPath.EndsWith('/'))
+        if (!Path.EndsInDirectorySeparator(settings.ExportPath))
         {
-            settings.ExportPath += '/';
+            settings.ExportPath += Path.DirectorySeparatorChar;
         }
         
-        if (!settings.ImportPath.EndsWith('/'))
+        if (!Path.EndsInDirectorySeparator(settings.ImportPath))
         {
-            settings.ImportPath += '/';
+            settings.ImportPath += Path.DirectorySeparatorChar;
         }
 
         context.Settings.Update(settings);
