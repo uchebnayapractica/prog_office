@@ -51,13 +51,13 @@
             </Grid>
 
             <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding Requests}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
+                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding Director}" Header="Руководитель:" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding DirectorName}" Header="Руководитель:" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Subject}" Header="Тема:" IsReadOnly="True"/>
-                        <DataGridCheckBoxColumn Binding="{Binding Status}" Header="Статус:" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Status}" Header="Статус:" IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>
             <Grid/>
