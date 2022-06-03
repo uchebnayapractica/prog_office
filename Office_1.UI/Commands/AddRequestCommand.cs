@@ -21,19 +21,22 @@ namespace Office_1.UI.Commands
             TabViewModel vm = (TabViewModel)viewModel;
 
             if ((_requestsViewModel.Client != null || 
-                (_requestsViewModel.ClientName != string.Empty && _requestsViewModel.ClientAddress != string.Empty))&&
+                (_requestsViewModel.ClientName != string.Empty && 
+                _requestsViewModel.ClientAddress != string.Empty &&
+                _requestsViewModel.ClientName != null &&
+                _requestsViewModel.ClientAddress != null
+                ))&&
                 _requestsViewModel.DirectorName != string.Empty &&
-                _requestsViewModel.Subject != string.Empty && 
-                _requestsViewModel.Content != string.Empty)
+                _requestsViewModel.DirectorName != null &&
+                _requestsViewModel.Subject != string.Empty &&
+                _requestsViewModel.Subject != null &&
+                _requestsViewModel.Content != string.Empty &&
+                _requestsViewModel.Content != null)
             {
                 if (_requestsViewModel.Client == null)
                 {
                     //Make new Client
-                    _requestsViewModel.Client = new Client
-                    {
-                        Name = _requestsViewModel.ClientName,
-                        Address = _requestsViewModel.ClientAddress
-                    };
+                    _requestsViewModel.Client = ClientService.GetOrCreateClientByNameAndAddress(_requestsViewModel.ClientName, _requestsViewModel.ClientAddress);
                 }
 
                 Request request = new Request
@@ -42,9 +45,19 @@ namespace Office_1.UI.Commands
                     DirectorName = _requestsViewModel.DirectorName,
                     Subject = _requestsViewModel.Subject,
                     Content = _requestsViewModel.Content,
+                    Resolution = string.Empty,
+                    Status = Status.Created,
+                    Remark = string.Empty
                 };
 
-                //RequestService.InsertRequest(request);
+                RequestService.InsertRequest(request, _requestsViewModel.Client);
+
+                _requestsViewModel.ClientName = string.Empty;
+                _requestsViewModel.ClientAddress = string.Empty;
+                _requestsViewModel.Client = null;
+                _requestsViewModel.DirectorName = string.Empty;
+                _requestsViewModel.Subject = string.Empty;
+                _requestsViewModel.Content = string.Empty;
 
                 _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
             } else
