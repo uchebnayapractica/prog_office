@@ -30,6 +30,16 @@ public class SettingsService
     {
         using var context = new ApplicationContext();
 
+        if (!settings.ExportPath.EndsWith('/'))
+        {
+            settings.ExportPath += '/';
+        }
+        
+        if (!settings.ImportPath.EndsWith('/'))
+        {
+            settings.ImportPath += '/';
+        }
+
         context.Settings.Update(settings);
         context.SaveChanges();
     }
