@@ -21,6 +21,7 @@ namespace Office_1.UI.ViewModels
             Clients = new ObservableCollection<Client>();
             GetClientsCommand = new GetClientsCommand(this);
             GetClientsByPrefixOfNameCommand = new GetClientsByPrefixOfNameCommand(this);
+            GetClientsCommand.Execute(null);
         }
 
         public Visibility GridVisibility

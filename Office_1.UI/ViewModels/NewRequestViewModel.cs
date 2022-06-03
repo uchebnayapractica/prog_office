@@ -1,7 +1,7 @@
 ﻿using Office_1.DataLayer.Models;
 using Office_1.UI.Commands;
 using System.Windows;
-
+using System.Windows.Input;
 
 namespace Office_1.UI.ViewModels
 {
@@ -12,6 +12,8 @@ namespace Office_1.UI.ViewModels
         private string _subject;
 
         private string _content;
+
+        private Client _selectedItem;
 
 
         public NewRequestViewModel()
@@ -59,7 +61,19 @@ namespace Office_1.UI.ViewModels
             }
         }
 
-        ChooseClientCommand ChooseClientCommand { get; set; }
+        public Client SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
 
+        public ICommand ChooseClientCommand { get; set; }
     }
 }
