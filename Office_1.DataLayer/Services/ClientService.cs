@@ -34,7 +34,7 @@ public static class ClientService
 
         return c;
     }
-    
+
     public static IList<Client> GetAllClients()
     {
         using var context = new ApplicationContext();

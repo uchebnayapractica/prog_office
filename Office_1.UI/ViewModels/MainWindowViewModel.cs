@@ -1,5 +1,4 @@
 ﻿using Office_1.UI.Commands;
-using System.Windows;
 using System.Windows.Input;
 
 
@@ -17,8 +16,8 @@ namespace Office_1.UI.ViewModels
             NewRequest = new NewRequestViewModel();
             ChangeVisibleGridCommand = new ChangeVisibleGridCommand(this);
             AddRequestCommand = new AddRequestCommand(NewRequest, this);
-            PrintNewRequestsToFilesCommand = PrintNewRequestsToFilesCommand(this);
-            GetNewRequestsFromFilesCommand = GetNewRequestsFromFilesCommand(this);
+            PrintNewRequestsToFilesCommand = new PrintNewRequestsToFilesCommand(this);
+            GetNewRequestsFromFilesCommand = new GetNewRequestsFromFilesCommand(this);
 
             VisibleVM = AllRequests;
         }

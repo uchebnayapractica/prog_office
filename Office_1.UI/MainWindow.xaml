@@ -57,21 +57,18 @@
 
             </Grid>
 
-            <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="AliceBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-
-                    <RowDefinition/>
+                    <RowDefinition Height="75*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="10*"/>
 
                 </Grid.RowDefinitions>
-                
-                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" Grid.Row="0" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
+
+                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" Margin="15, 15, 15, 15" Grid.Row="0" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
@@ -81,11 +78,11 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Label Name ="InPathLabel" Content="Откуда брать файлы?"  Grid.Row="2" Margin="10, 10, 10, 10" FontSize="15"/>
-                <TextBox Name ="InPathTextBox" Text="{Binding InputPath}" Grid.Row="3" Margin="15, 15, 15, 15"/>
+                <Label Name ="InPathLabel" Content="Откуда брать файлы?"  Grid.Row="1" Margin="10, 10, 10, 10" FontSize="15"/>
+                <TextBox Name ="InPathTextBox" Text="{Binding InputPath}" Grid.Row="2" Margin="15, 15, 15, 15"/>
 
-                <Label Name ="OutPathLabel" Content="Куда сохранять файлы?"  Grid.Row="4" Margin="10, 10, 10, 10" FontSize="15"/>
-                <TextBox Name ="OutPathTextBox" Text="{Binding OutputPath}"  Grid.Row="5" Margin="15, 15, 15, 15"/>
+                <Label Name ="OutPathLabel" Content="Куда сохранять файлы?"  Grid.Row="3" Margin="10, 10, 10, 10" FontSize="15"/>
+                <TextBox Name ="OutPathTextBox" Text="{Binding OutputPath}"  Grid.Row="4" Margin="15, 15, 15, 15"/>
                 <Grid/>
         </Grid>
 

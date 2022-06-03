@@ -9,7 +9,7 @@ namespace Office_1.DataLayer.Services
             bool showDeclined)
         {
             List<Status> statuses = new();
-            
+
             if (showCreated)
             {
                 statuses.Add(Status.Created);
@@ -37,7 +37,7 @@ namespace Office_1.DataLayer.Services
             bool showDeclined)
         {
             using var context = new ApplicationContext();
-            
+
             var statuses = GetStatuses(showCreated, showInReview, showReviewed, showDeclined);
             var query = context.Requests.Where(r => statuses.Contains(r.Status));
 
@@ -64,9 +64,9 @@ namespace Office_1.DataLayer.Services
             using var context = new ApplicationContext();
 
             request.Client = client;
-            
+
             context.Clients.Attach(client);
-            
+
             context.Requests.Add(request);
             context.SaveChanges();
         }
