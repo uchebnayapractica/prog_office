@@ -22,7 +22,7 @@ public class RequestTests
     [Test]
     public void TestMakeRequest()
     {
-        var request = MakeSomeRequest(Status.Created);
+        var request = MakeSomeRequest(Status.Created, "Иван", "улица");
         
         Assert.AreNotEqual(0, request.Id); // обращение загрузилось в бд 
         
@@ -32,6 +32,28 @@ public class RequestTests
         Assert.AreEqual("резолюция", request.Resolution);
         Assert.AreEqual(Status.Created, request.Status);
         Assert.AreEqual("тема обращения", request.Subject);
+        
+        var client = request.Client;
+        Assert.IsNotNull(client);
+        Assert.AreNotEqual(0, client.Id);
+        Assert.AreEqual("Иван", client.Name);
+    }
+
+    [Test]
+    public void TestGetAllRequests()
+    {
+        var request = MakeSomeRequest(Status.Created, "Иван", "улица");
+
+        var allRequests = RequestService.GetAllRequests();
+        Assert.IsNotEmpty(allRequests);
+
+        var gotRequest = allRequests.First();
+        Assert.AreEqual(request.Id, gotRequest.Id);
+
+        var client = gotRequest.Client;
+        Assert.IsNotNull(client);
+        Assert.AreNotEqual(0, client.Id);
+        Assert.AreEqual("Иван", client.Name);
     }
 
     [Test]

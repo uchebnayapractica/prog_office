@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Office_1.DataLayer.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using System.ComponentModel.DataAnnotations;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
+using ZXing.Rendering;
 
 namespace Office_1.DataLayer.Models;
 
@@ -39,26 +42,43 @@ public class Request
     [Comment("Примечание")]
     public string Remark { get; set; }
 
-    public (BitMatrix qrImage, string qrString) GetQr(int width, int height)
+    public (Image qrImage, string qrString) GetQr(int width, int height, int margin)
     {
-        var writer = new QRCodeWriter();
+        var qrString = ToStringForQr();
 
-        var stringForQr = ToStringForQr();
-        var m = writer.encode(stringForQr, BarcodeFormat.QR_CODE, width, height);
-        if (m is null)
+        var options = new EncodingOptions
         {
-            throw new NullReferenceException("BitMatrix is null");
-        }
-
-        return (m, stringForQr);
+            Height = height, Width = width, Margin = margin,
+        };
+        
+        options.Hints.Add(EncodeHintType.CHARACTER_SET, "utf-8");
+        
+        var barcodeWriter = new ZXing.ImageSharp.BarcodeWriter<Rgba32> { 
+            Format = BarcodeFormat.QR_CODE, 
+            Options = options
+        };
+        
+        var image = barcodeWriter.Write(qrString);
+        
+        return (image, qrString);
     }
 
     protected string ToStringForQr()
     {
         var dict = ToDictionaryForQr();
-        var values = dict.Select(p => p.Key + ":" + p.Value);
+        var values = dict.Select(p => PrepareRow(p.Key, p.Value));
 
         return string.Join(" ", values);
+    }
+
+    protected string PrepareRow(string key, string value)
+    {
+        return PrepareValue(key) + ":" + PrepareValue(value);
+    }
+    
+    protected string PrepareValue(string value)
+    {
+        return value.Replace(' ', '_');
     }
 
     protected IDictionary<string, string> ToDictionaryForQr()
@@ -76,6 +96,7 @@ public class Request
             ["Примечание"] = Remark
         };
     }
+    
 
     public static Request LoadFromQr(BinaryBitmap bitMap)
     {
