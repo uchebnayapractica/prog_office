@@ -86,8 +86,15 @@ public static class RequestScanner
             Remark = dict["Примечание"]
         };
 
-        RequestService.InsertRequest(request, client);
-
+        if(RequestService.Exists(request))
+        {
+            RequestService.UpdateRequest(request, client);
+        }
+        else
+        {
+            RequestService.InsertRequest(request, client);
+        }
+        
         return request;
     }
 

@@ -38,6 +38,9 @@ public class RequestImportExportManagerTests
     {
         RequestTests.MakeSomeRequest(Status.Created, "Иван", "улица Пушкина");
         RequestTests.MakeSomeRequest(Status.Created, "Иван 2", "улица Колотушкина");
+        RequestTests.MakeSomeRequest(Status.Created, "Иван 3", "улица Колотушкина 2");
+        RequestTests.MakeSomeRequest(Status.Created, "Кто-то", "улица Колотушкина 3");
+        RequestTests.MakeSomeRequest(Status.Created, "Владислав", "улица Пушкина 4");
 
         var files = RequestImportExportManager.ExportCreatedRequests();
         Console.WriteLine("Exported files: " + string.Join(", ", files));
