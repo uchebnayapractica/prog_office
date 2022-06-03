@@ -1,18 +1,55 @@
 using Office_1.DataLayer.Models;
 using Office_1.DataLayer.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using ZXing;
+using ZXing.Common;
 using ZXing.QrCode;
 
 namespace Office_1.DataLayer;
 
-public class RequestScanner
+public static class RequestScanner
 {
 
-    protected FileStream Stream;
-    
-    public RequestScanner(FileStream stream)
+    public static Request LoadFromFile(string filePath)
     {
-        Stream = stream;
+        using var image = Image.Load(filePath);
+
+        return LoadFromImage(image);
+    }
+
+    public static Request LoadFromImage(Image image)
+    {
+        using var ms = new MemoryStream();
+        
+        image.SaveAsJpeg(ms);
+
+        return LoadFromStream(ms, image.Width, image.Height);
+    }
+    
+    public static Request LoadFromStream(Stream stream, int width, int height)
+    {
+        var bytes = ReadFully(stream);
+        
+        var reader = new ZXing.ImageSharp.BarcodeReader<Rgb24>();
+        reader.Options.Hints.Add(DecodeHintType.CHARACTER_SET, "utf-8");
+
+        var bitmap = new BinaryBitmap(new HybridBinarizer(new RGBLuminanceSource(bytes, width, height)));
+        
+        return LoadFromQr(bitmap);
+    }
+    
+    private static byte[] ReadFully(Stream input)
+    {
+        var buffer = new byte[16*1024];
+        using var ms = new MemoryStream();
+        
+        int read;
+        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+        {
+            ms.Write(buffer, 0, read);
+        }
+        return ms.ToArray();
     }
 
     public static Request LoadFromQr(BinaryBitmap bitmap)
@@ -49,7 +86,7 @@ public class RequestScanner
         return LoadFromQrDictionary(values);
     }
 
-    protected static (string key, string value) ParseRow(string row)
+    private static (string key, string value) ParseRow(string row)
     {
         var rowData = row.Split(':', 2);
             
@@ -59,12 +96,12 @@ public class RequestScanner
         return (key, value);
     }
 
-    protected static string ParseValue(string preparedValue)
+    private static string ParseValue(string preparedValue)
     {
         return preparedValue.Replace('_', ' ');
     }
 
-    protected static Request LoadFromQrDictionary(IDictionary<string, string> dict)
+    public static Request LoadFromQrDictionary(IDictionary<string, string> dict)
     {
         CheckQrDictionary(dict);
 
@@ -89,7 +126,7 @@ public class RequestScanner
         return request;
     }
 
-    protected static void CheckQrDictionary(IDictionary<string, string> dict)
+    private static void CheckQrDictionary(IDictionary<string, string> dict)
     {
         string[] requiredParams = { "Идентификатор", "ФИО заявителя", "ФИО руководителя", "Адрес", "Тематика", "Содержание", "Резолюция", "Статус", "Примечание" };
         foreach (var param in requiredParams)
