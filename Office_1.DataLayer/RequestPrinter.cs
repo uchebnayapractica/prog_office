@@ -9,7 +9,7 @@ using ZXing.QrCode;
 
 namespace Office_1.DataLayer;
 
-public class RequestPrinter
+public static class RequestPrinter
 {
     private const int Width = 794;
     private const int Height = 1123;
@@ -24,16 +24,16 @@ public class RequestPrinter
     private const int TextSizeBigLength = 10;
     private const int BigLength = 700;
 
-    private Request _request;
-    
-    public RequestPrinter(Request request)
+    public static void PrintIntoFile(string filePath, Request request, bool changeStatusInfoIntoInReview = false)
     {
-        _request = request;
+        using var image = Print(request, changeStatusInfoIntoInReview);
+        
+        image.SaveAsJpeg(filePath);
     }
-
-    public Image Print(bool changeStatusIntoInReview = false)
+    
+    public static Image Print(Request request, bool changeStatusIntoInReview = false)
     {
-        var (image, qrText) = _request.GetQr(Width, Height, Margin);
+        var (image, qrText) = request.GetQr(Width, Height, Margin);
 
         var size = qrText.Length >= BigLength ? TextSizeBigLength : TextSize;
         
@@ -41,14 +41,14 @@ public class RequestPrinter
 
         if (changeStatusIntoInReview)
         {
-            _request.Status = Status.InReview;
-            RequestService.UpdateRequest(_request);
+            request.Status = Status.InReview;
+            RequestService.UpdateRequest(request);
         }
         
         return image;
     }
 
-    protected void WriteText(Image image, string text, int x, int y, int size, int wrapLength)
+    private static void WriteText(Image image, string text, int x, int y, int size, int wrapLength)
     {
         var font = SystemFonts.CreateFont("Arial", size, FontStyle.Regular);
 

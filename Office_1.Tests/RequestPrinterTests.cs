@@ -12,7 +12,7 @@ namespace Office_1.Tests;
 
 public class RequestPrinterTests
 {
-    
+
     [SetUp]
     public void SetUp()
     {
@@ -26,29 +26,15 @@ public class RequestPrinterTests
     [Test]
     public void TestCreation()
     {
+        const string myPath = "/Users/noliktop/Desktop/office_qr/";
+        
         var request = RequestTests.MakeSomeRequest(Status.Created, "Иван", "улица Пушкина");
-
-        var printer = new RequestPrinter(request);
-        using var image = printer.Print();
+        RequestPrinter.PrintIntoFile(myPath + "qr_1.jpeg", request);
         
-        image.SaveAsJpeg("/Users/noliktop/Desktop/office_qr/qr_1.jpeg");
-        
+        // вариант с длинным контентом
         var clientName = string.Concat(Enumerable.Repeat("a", 500));
         request = RequestTests.MakeSomeRequest(Status.Created, "Иван" + clientName, "улица Пушкина");
-
-        printer = new RequestPrinter(request);
-        using var image2 = printer.Print();
-        
-        image2.SaveAsJpeg("/Users/noliktop/Desktop/office_qr/qr_2.jpeg");
-    }
-
-    [Test]
-    public void TestDecoding()
-    {
-        
-        
-        //var source = new RGBLuminanceSource();
-        //var binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
+        RequestPrinter.PrintIntoFile(myPath + "qr_2.jpeg", request);   
     }
     
 }

@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Office_1.DataLayer.Services;
 using SixLabors.ImageSharp;
@@ -38,6 +41,9 @@ public class Request
     [Required]
     [Comment("Статус")]
     public Status Status { get; set; }
+    
+    [NotMapped]
+    public string StatusDescription => Status.GetDescription() ?? Status.ToString();
 
     [Comment("Примечание")]
     public string Remark { get; set; }
@@ -53,7 +59,7 @@ public class Request
         
         options.Hints.Add(EncodeHintType.CHARACTER_SET, "utf-8");
         
-        var barcodeWriter = new ZXing.ImageSharp.BarcodeWriter<Rgba32> { 
+        var barcodeWriter = new ZXing.ImageSharp.BarcodeWriter<Rgb24> { 
             Format = BarcodeFormat.QR_CODE, 
             Options = options
         };
