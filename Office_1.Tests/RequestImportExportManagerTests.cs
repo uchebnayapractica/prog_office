@@ -53,5 +53,39 @@ public class RequestImportExportManagerTests
         Assert.AreEqual(Status.InReview, first.Status);
         Assert.AreEqual(Status.InReview, second.Status);
     }
+
+    [Test]
+    public void TestImport()
+    {
+        var requests = RequestImportExportManager.ImportRequests();
+        
+        Assert.AreEqual(2, requests.Count, "Залейте 2 файлика из export папки");
+
+        var first = requests[0];
+        var second= requests[1];
+        
+        Assert.AreNotEqual(0, first.Id);
+        Assert.AreNotEqual(0, second.Id);
+        
+        Assert.IsNotNull(first.Client);
+        Assert.IsNotNull(second.Client);
+        
+        Assert.AreNotEqual(0, first.Client.Id);
+        Assert.AreNotEqual(0, second.Client.Id);
+
+        if (!first.Client.Name.Equals("Иван"))
+        {
+            (first, second) = (second, first);
+        }
+        
+        Assert.AreEqual("Иван", first.Client.Name);
+        Assert.AreEqual("Иван 2", second.Client.Name);
+        
+        Assert.AreEqual(Status.Created, first.Status);
+        Assert.AreEqual(Status.Created, second.Status);
+        
+        Assert.AreEqual("резолюция", first.Resolution);
+        Assert.AreEqual("резолюция", second.Resolution);
+    }
     
 }
