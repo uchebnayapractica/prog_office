@@ -59,6 +59,17 @@ namespace Office_1.DataLayer.Services
             context.SaveChanges();
         }
 
+        public static void UpdateRequest(Request request, Client client)
+        {
+            using var context = new ApplicationContext();
+
+            request.Client = client;
+            context.Clients.Attach(client);
+
+            context.Requests.Update(request);
+            context.SaveChanges();
+        }
+
         public static void InsertRequest(Request request, Client client)
         {
             using var context = new ApplicationContext();
@@ -69,6 +80,13 @@ namespace Office_1.DataLayer.Services
             
             context.Requests.Add(request);
             context.SaveChanges();
+        }
+
+        public static bool Exists(Request request)
+        {
+            using var context = new ApplicationContext();
+
+            return context.Requests.Any(r => r.Id == request.Id);
         }
         
     }
