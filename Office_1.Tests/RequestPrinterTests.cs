@@ -32,7 +32,7 @@ public class RequestPrinterTests
         RequestPrinter.PrintIntoFile(myPath + "qr_1.jpeg", request);
         
         // вариант с длинным контентом
-        var clientName = string.Concat(Enumerable.Repeat("a", 500));
+        var clientName = string.Concat(Enumerable.Repeat("а", 500));
         request = RequestTests.MakeSomeRequest(Status.Created, "Иван" + clientName, "улица Пушкина");
         RequestPrinter.PrintIntoFile(myPath + "qr_2.jpeg", request);   
     }
