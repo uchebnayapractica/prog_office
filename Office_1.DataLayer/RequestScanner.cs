@@ -13,64 +13,31 @@ public static class RequestScanner
 
     public static Request LoadFromFile(string filePath)
     {
-        using var image = Image.Load(filePath);
+        using var image = Image.Load(filePath) as Image<Rgb24>;
 
         return LoadFromImage(image);
     }
 
-    public static Request LoadFromImage(Image image)
+    public static Request LoadFromImage(Image<Rgb24> image)
     {
-        using var ms = new MemoryStream();
-        
-        image.SaveAsJpeg(ms);
-
-        return LoadFromStream(ms, image.Width, image.Height);
-    }
-    
-    public static Request LoadFromStream(Stream stream, int width, int height)
-    {
-        var bytes = ReadFully(stream);
-        
         var reader = new ZXing.ImageSharp.BarcodeReader<Rgb24>();
         reader.Options.Hints.Add(DecodeHintType.CHARACTER_SET, "utf-8");
 
-        var bitmap = new BinaryBitmap(new HybridBinarizer(new RGBLuminanceSource(bytes, width, height)));
-        
-        return LoadFromQr(bitmap);
-    }
-    
-    private static byte[] ReadFully(Stream input)
-    {
-        var buffer = new byte[16*1024];
-        using var ms = new MemoryStream();
-        
-        int read;
-        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-        {
-            ms.Write(buffer, 0, read);
-        }
-        return ms.ToArray();
-    }
-
-    public static Request LoadFromQr(BinaryBitmap bitmap)
-    {
-        var reader = new QRCodeReader();
-
-        var result = reader.decode(bitmap);
+        var result = reader.Decode(image);
         if (result is null)
         {
-            throw new NullReferenceException("result is null");
+            throw new NullReferenceException("Result is null");
         }
-
+        
         var text = result.Text;
         if (text is null)
         {
-            throw new NullReferenceException("text is null");
+            throw new NullReferenceException("Text is null");
         }
 
         return LoadFromQrString(text);
     }
-    
+
     public static Request LoadFromQrString(string data)
     {
         var rows = data.Split(' ');
