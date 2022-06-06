@@ -8,11 +8,15 @@ namespace Office_1.DataLayer;
 
 public static class RequestScanner
 {
-
     public static Request LoadFromFile(string filePath)
     {
         using var image = Image.Load(filePath) as Image<Rgb24>;
 
+        if (image is null)
+        {
+            throw new Exception("Image is invalid");
+        }
+        
         return LoadFromImage(image);
     }
 
@@ -71,7 +75,11 @@ public static class RequestScanner
         CheckQrDictionary(dict);
 
         var id = int.Parse(dict["Идентификатор"]);
-        var client = ClientService.GetOrCreateClientByNameAndAddress(dict["ФИО заявителя"], dict["Адрес"]);
+        
+        var clientName = dict["ФИО заявителя"];
+        var clientAddress = dict["Адрес"];
+        var client = ClientService.GetOrCreateClientByNameAndAddress(clientName, clientAddress);
+        
         var status = EnumExtension.GetValueFromDescription<Status>(dict["Статус"]);
 
         var request = new Request
@@ -86,7 +94,7 @@ public static class RequestScanner
             Remark = dict["Примечание"]
         };
 
-        if(RequestService.Exists(request))
+        if (RequestService.Exists(request))
         {
             RequestService.UpdateRequest(request, client);
         }
@@ -94,20 +102,23 @@ public static class RequestScanner
         {
             RequestService.InsertRequest(request, client);
         }
-        
+
         return request;
     }
 
     private static void CheckQrDictionary(IDictionary<string, string> dict)
     {
-        string[] requiredParams = { "Идентификатор", "ФИО заявителя", "ФИО руководителя", "Адрес", "Тематика", "Содержание", "Резолюция", "Статус", "Примечание" };
+        string[] requiredParams =
+        {
+            "Идентификатор", "ФИО заявителя", "ФИО руководителя", "Адрес", "Тематика", "Содержание", "Резолюция",
+            "Статус", "Примечание"
+        };
         foreach (var param in requiredParams)
         {
             if (!dict.ContainsKey(param))
             {
-                throw new ArgumentException($"Отсутствует параметр \"{param}\" в словаре");
+                throw new ArgumentException($"No \"{param}\" parameter in dictionary");
             }
         }
     }
-
 }
