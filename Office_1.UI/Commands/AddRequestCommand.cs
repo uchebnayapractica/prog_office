@@ -20,12 +20,12 @@ namespace Office_1.UI.Commands
         {
             TabViewModel vm = (TabViewModel)viewModel;
 
-            if ((_requestsViewModel.Client != null || 
-                (_requestsViewModel.ClientName != string.Empty && 
+            if ((_requestsViewModel.Client != null ||
+                (_requestsViewModel.ClientName != string.Empty &&
                 _requestsViewModel.ClientAddress != string.Empty &&
                 _requestsViewModel.ClientName != null &&
                 _requestsViewModel.ClientAddress != null
-                ))&&
+                )) &&
                 _requestsViewModel.DirectorName != string.Empty &&
                 _requestsViewModel.DirectorName != null &&
                 _requestsViewModel.Subject != string.Empty &&
@@ -61,8 +61,10 @@ namespace Office_1.UI.Commands
 
                 //Обновляем список
                 _mainWindowViewModel.AllRequests.GetRequestsCommand.Execute(null);
+                MessageBox.Show("Успешно добавлено!");
                 _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Заполните все поля!");
             }

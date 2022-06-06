@@ -22,7 +22,8 @@ namespace Office_1.UI.Commands
                 _requestsViewModel.Client = ChosenClient;
                 _requestsViewModel.ClientName = ChosenClient.Name;
                 _requestsViewModel.ClientAddress = ChosenClient.Address;
-            } else
+            }
+            else
             {
                 MessageBox.Show("Для начала выберите нужного клиента в таблице, кликнув на строчку с ним!");
             }

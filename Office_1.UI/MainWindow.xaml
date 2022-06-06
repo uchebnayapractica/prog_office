@@ -26,11 +26,15 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition/>
+                    
+                    <RowDefinition/>
+                    
                     <RowDefinition/>
                     <RowDefinition/>
+                    
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    
                     <RowDefinition/>
 
                 </Grid.RowDefinitions>
@@ -47,11 +51,24 @@
                     <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowDeclined}" FontSize="14"/>
                 </StackPanel>
 
-                <Button x:Name="PrintButton" Command="{Binding PrintNewCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="PrintButton" Command="{Binding PrintNewRequestsToFilesCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
+
+                <Button x:Name="TakeFileButton" Command="{Binding GetNewRequestsFromFilesCommand}" Content="Считать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" FontSize="14"/>
+
             </Grid>
 
-            <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
+            <Grid x:Name="RequestListGrid" Grid.Column ="0" Background="AliceBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="10*"/>
+
+                </Grid.RowDefinitions>
+
+                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" Margin="15, 15, 15, 15" Grid.Row="0" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
@@ -60,7 +77,13 @@
                         <DataGridTextColumn Binding="{Binding StatusDescription}" Header="Статус:" IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>
-            <Grid/>
+
+                <Label Name ="InPathLabel" Content="Откуда брать файлы?"  Grid.Row="1" Margin="10, 10, 10, 10" FontSize="15"/>
+                <TextBox Name ="InPathTextBox" Text="{Binding InputPath}" Grid.Row="2" Margin="15, 15, 15, 15"/>
+
+                <Label Name ="OutPathLabel" Content="Куда сохранять файлы?"  Grid.Row="3" Margin="10, 10, 10, 10" FontSize="15"/>
+                <TextBox Name ="OutPathTextBox" Text="{Binding OutputPath}"  Grid.Row="4" Margin="15, 15, 15, 15"/>
+                <Grid/>
         </Grid>
 
         </Grid>

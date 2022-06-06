@@ -1,11 +1,9 @@
 using Office_1.DataLayer.Models;
 using Office_1.DataLayer.Services;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Fonts;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing;
-using ZXing.QrCode;
 
 namespace Office_1.DataLayer;
 
@@ -27,16 +25,16 @@ public static class RequestPrinter
     public static void PrintIntoFile(string filePath, Request request, bool changeStatusInfoIntoInReview = false)
     {
         using var image = Print(request, changeStatusInfoIntoInReview);
-        
+
         image.SaveAsJpeg(filePath);
     }
-    
+
     public static Image Print(Request request, bool changeStatusIntoInReview = false)
     {
         var (image, qrText) = request.GetQr(Width, Height, Margin);
 
         var size = qrText.Length >= BigLength ? TextSizeBigLength : TextSize;
-        
+
         WriteText(image, qrText, TextX, TextY, size, WrapLength);
 
         if (changeStatusIntoInReview)
@@ -44,7 +42,7 @@ public static class RequestPrinter
             request.Status = Status.InReview;
             RequestService.UpdateRequest(request);
         }
-        
+
         return image;
     }
 
@@ -55,13 +53,13 @@ public static class RequestPrinter
         TextOptions options = new(font)
         {
             Origin = new PointF(x, y),
-            TabWidth = 8, 
-            WrappingLength = wrapLength, 
+            TabWidth = 8,
+            WrappingLength = wrapLength,
             WordBreaking = WordBreaking.BreakAll,
             HorizontalAlignment = HorizontalAlignment.Left
         };
-        
-        image.Mutate(img=> img.DrawText(options, text, Color.Black));
+
+        image.Mutate(img => img.DrawText(options, text, Color.Black));
     }
 
 }

@@ -1,15 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Office_1.DataLayer.Services;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
-using ZXing.Rendering;
 
 namespace Office_1.DataLayer.Models;
 
@@ -18,7 +15,7 @@ public class Request
 
     public int Id { get; set; }
 
-    [Required] 
+    [Required]
     [Comment("Заявитель")]
     public Client Client { get; set; }
 
@@ -41,7 +38,7 @@ public class Request
     [Required]
     [Comment("Статус")]
     public Status Status { get; set; }
-    
+
     [NotMapped]
     public string StatusDescription => Status.GetDescription() ?? Status.ToString();
 
@@ -54,18 +51,21 @@ public class Request
 
         var options = new EncodingOptions
         {
-            Height = height, Width = width, Margin = margin,
+            Height = height,
+            Width = width,
+            Margin = margin,
         };
-        
+
         options.Hints.Add(EncodeHintType.CHARACTER_SET, "utf-8");
-        
-        var barcodeWriter = new ZXing.ImageSharp.BarcodeWriter<Rgb24> { 
-            Format = BarcodeFormat.QR_CODE, 
+
+        var barcodeWriter = new ZXing.ImageSharp.BarcodeWriter<Rgb24>
+        {
+            Format = BarcodeFormat.QR_CODE,
             Options = options
         };
-        
+
         var image = barcodeWriter.Write(qrString);
-        
+
         return (image, qrString);
     }
 
@@ -81,7 +81,7 @@ public class Request
     {
         return PrepareValue(key) + ":" + PrepareValue(value);
     }
-    
+
     protected string PrepareValue(string value)
     {
         return value.Replace(' ', '_');
@@ -102,7 +102,7 @@ public class Request
             ["Примечание"] = Remark
         };
     }
-    
+
 
     public static Request LoadFromQr(BinaryBitmap bitMap)
     {
@@ -152,7 +152,7 @@ public class Request
         var request = new Request
         {
             Id = id,
-            
+
             DirectorName = dict["ФИО руководителя"],
             Subject = dict["Тематика"],
             Content = dict["Содержание"],
@@ -162,7 +162,7 @@ public class Request
         };
 
         RequestService.InsertRequest(request, client);
-        
+
         return request;
     }
 
