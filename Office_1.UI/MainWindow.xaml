@@ -5,13 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Office_1.UI" xmlns:viewmodels="clr-namespace:Office_1.UI.ViewModels" 
         mc:Ignorable="d"
-        Title="Office_1" Height="600" Width="1000"
+        Title="Office_1" Height="750" Width="1200" WindowStartupLocation="CenterScreen"
         >
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="913*"/>
+            <ColumnDefinition Width="16*"/>
+        </Grid.ColumnDefinitions>
         <!--#region RequestListGrid -->
 
-        <Grid Visibility="{Binding AllRequests.GridVisibility}">
+        <Grid Visibility="{Binding AllRequests.GridVisibility}" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75*"/>
                 <ColumnDefinition Width="25*"/>
@@ -26,21 +31,23 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    
+
                     <RowDefinition/>
-                    
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    
+
                     <RowDefinition/>
                     <RowDefinition/>
-                    
+
+                    <RowDefinition/>
+                    <RowDefinition/>
+
                     <RowDefinition/>
 
                 </Grid.RowDefinitions>
 
 
-                <Button x:Name="NewRequest" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding NewRequest}" Content="Новая заявка" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="ViewRequest" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding ViewRequest}" IsEnabled="{Binding AllRequests.IsSeeFullButtonAvailable}"  Content="Посмотреть обращение" Grid.Column="1" Grid.Row="0" Margin="0, 30, 0, 0" FontSize="14"/>
+
+                <Button x:Name="NewRequest" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding NewRequest}" Content="Новое обращение" Grid.Column="1" Grid.Row="1" Margin="0, 30, 0, 0" FontSize="14"/>
 
                 <Label Name="ShowLabel" Content="Показать:" Grid.Column="1" Grid.Row="2" Margin="0, 15, 0, 15" VerticalAlignment="Bottom" FontSize="14"/>
 
@@ -51,9 +58,9 @@
                     <CheckBox Content="Отклонённые" Margin="0, 5, 0, 0" IsChecked="{Binding AllRequests.ShowDeclined}" FontSize="14"/>
                 </StackPanel>
 
-                <Button x:Name="PrintButton" Command="{Binding PrintNewRequestsToFilesCommand}" Content="Напечатать заявки" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="PrintButton" Command="{Binding PrintNewRequestsToFilesCommand}" Content="Напечатать обращения" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
 
-                <Button x:Name="TakeFileButton" Command="{Binding GetNewRequestsFromFilesCommand}" Content="Считать заявки" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="TakeFileButton" Command="{Binding GetNewRequestsFromFilesCommand}" Content="Считать обращения" Grid.Column="1" Grid.Row="5" Margin="0, 30, 0, 0" FontSize="14"/>
 
             </Grid>
 
@@ -68,7 +75,7 @@
 
                 </Grid.RowDefinitions>
 
-                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" Margin="15, 15, 15, 15" Grid.Row="0" SelectedItem="{Binding SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
+                <DataGrid x:Name="RequestsDataGrid" ItemsSource="{Binding AllRequests.Requests}" Margin="15, 15, 15, 15" Grid.Row="0" SelectedItem="{Binding AllRequests.SelectedItem}" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True"  Grid.Column="0" ColumnWidth="*" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Id}" Header="№" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding Client.Name}" Header="Клиент:" IsReadOnly="True"/>
@@ -84,19 +91,19 @@
                 <Label Name ="OutPathLabel" Content="Куда сохранять файлы?"  Grid.Row="3" Margin="10, 10, 10, 10" FontSize="15"/>
                 <TextBox Name ="OutPathTextBox" Text="{Binding OutputPath}"  Grid.Row="4" Margin="15, 15, 15, 15"/>
                 <Grid/>
-        </Grid>
+            </Grid>
 
         </Grid>
         <!--#endregion-->
 
         <!--#region NewRequestGrid-->
 
-        <Grid Visibility="{Binding NewRequest.GridVisibility}">
+        <Grid Visibility="{Binding NewRequest.GridVisibility}" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75*"/>
                 <ColumnDefinition Width="25*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Grid x:Name="RightAddGrid" Grid.Column ="1" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15*"/>
@@ -115,7 +122,7 @@
 
                 </Grid.RowDefinitions>
 
-                <Button x:Name="AddRequest" Command="{Binding AddRequestCommand}" CommandParameter="{Binding AllRequests}" Content="Добавить заявку" Grid.Column="1" Grid.Row="2" Margin="0, 30, 0, 0" FontSize="14"/>
+                <Button x:Name="AddRequest" Command="{Binding AddRequestCommand}" CommandParameter="{Binding AllRequests}" Content="Добавить обращение" Grid.Column="1" Grid.Row="2" Margin="0, 30, 0, 0" FontSize="14"/>
                 <Button x:Name="ToMain" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding AllRequests}" Content="Назад" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
 
 
@@ -131,12 +138,12 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15*"/>
-                    
+
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="30*"/>
                     <RowDefinition Height="18*"/>
                     <RowDefinition Height="50*"/>
-                    
+
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="20*"/>
                     <RowDefinition Height="30*"/>
@@ -155,7 +162,7 @@
                         <DataGridTextColumn Binding="{Binding Address}" Header="Адрес:" IsReadOnly="True" Width="60*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                
+
                 <Label Name ="ClientsGridLabel" Content="Может вам подойдёт один из этих клиентов?" Grid.Column="1" Grid.Row="3" Margin="10, 10, 10, 10" FontSize="12"/>
                 <Button Name ="ChooseButton" Command="{Binding NewRequest.ChooseClientCommand}" Grid.Column="3" Grid.Row="4" Margin="0, 15, 10, 15" Background="AliceBlue" >Выбрать</Button>
 
@@ -169,6 +176,90 @@
                 <TextBox Name ="ContentTextBox" Text="{Binding NewRequest.Content}" Grid.Column="2" Grid.Row="7" Margin="15, 15, 15, 15"/>
 
             </Grid>
+
+        </Grid>
+
+        <!--#endregion-->
+
+        <!--#region ViewRequest -->
+
+        <Grid Visibility="{Binding ViewRequest.GridVisibility}" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition Width="25*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="RightViewGrid" Grid.Column ="1" Background="#FFE0DFDF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+
+                <Button x:Name="ToMain2" Command="{Binding ChangeVisibleGridCommand}" CommandParameter="{Binding AllRequests}" Content="Назад" Grid.Column="1" Grid.Row="4" Margin="0, 30, 0, 0" FontSize="14"/>
+            </Grid>
+
+            <Grid Name ="ViewRequestGrid" Grid.Column="0" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="10*"/>
+
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <Label Name ="ClientLabelView" Content="Клиент:" Grid.Column="1" Grid.Row="1" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="ClientComboBoxView" Content="{Binding ViewRequest.ClientName}" Grid.Column="2" Grid.Row="1" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="ClientAdressLabelView" Content="Адрес клиента:" Grid.Column="1" Grid.Row="2" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="ClientAdressTextBoxView" Content="{Binding ViewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="5, 5, 5, 5" />
+
+                <Label Name ="DirectorLabelView" Content="Руководитель:" Grid.Column="1" Grid.Row="3" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="DirectorTextBoxView" Content="{Binding ViewRequest.DirectorName}" Grid.Column="2" Grid.Row="3" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="SubjectLabelView" Content="Тема:" Grid.Column="1" Grid.Row="4" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="SubjectTextBoxView" Content="{Binding ViewRequest.Subject}" Grid.Column="2" Grid.Row="4" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="ContentLabelView" Content="Содержание:" Grid.Column="1" Grid.Row="5" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="ContentTextBoxView" Content="{Binding ViewRequest.Content}" Grid.Column="2" Grid.Row="5" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="ResolutionLabelView" Content="Резолюция:" Grid.Column="1" Grid.Row="6" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="ResolutionTextBoxView" Content="{Binding ViewRequest.Resolution}" Grid.Column="2" Grid.Row="6" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="RemarkLabelView" Content="Ремарка:" Grid.Column="1" Grid.Row="7" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="RemarkTextBoxView" Content="{Binding ViewRequest.Remark}" Grid.Column="2" Grid.Row="7" Margin="5, 5, 5, 5"/>
+
+                <Label Name ="StatusLabelView" Content="Статус:" Grid.Column="1" Grid.Row="8" Margin="5, 5, 5, 5" FontSize="15"/>
+                <Label Name ="StatusTextBoxView" Content="{Binding ViewRequest.StatusDefinition}" Grid.Column="2" Grid.Row="8" Margin="5, 5, 5, 5"/>
+
+            </Grid>
+
 
         </Grid>
 

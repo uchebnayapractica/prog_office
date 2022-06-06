@@ -14,8 +14,9 @@ namespace Office_1.UI.ViewModels
         public MainWindowViewModel()
         {
             AllRequests = new AllRequestsViewModel();
-            Clients = new ClientsViewModel();
             NewRequest = new NewRequestViewModel();
+            ViewRequest = new ViewFullRequestViewModel();
+
             ChangeVisibleGridCommand = new ChangeVisibleGridCommand(this);
             AddRequestCommand = new AddRequestCommand(NewRequest, this);
             PrintNewRequestsToFilesCommand = new PrintNewRequestsToFilesCommand(this);
@@ -79,6 +80,6 @@ namespace Office_1.UI.ViewModels
         public TabViewModel VisibleVM { get; set; }
         public NewRequestViewModel NewRequest { get; set; }
         public AllRequestsViewModel AllRequests { get; set; }
-        public ClientsViewModel Clients { get; set; }
+        public ViewFullRequestViewModel ViewRequest { get; set; }
     }
 }
