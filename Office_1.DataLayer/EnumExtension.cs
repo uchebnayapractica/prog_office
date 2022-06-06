@@ -41,7 +41,7 @@ public static class EnumExtension
             }
         }
 
-        throw new ArgumentException("Not found.", nameof(description));
+        throw new ArgumentException("Not found", nameof(description));
     }
     
 }
