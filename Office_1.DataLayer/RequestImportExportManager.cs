@@ -21,7 +21,7 @@ public static class RequestImportExportManager
             throw new Exception("Указанный import path не существует");
         }
 
-        return ImportRequestsFrom(path);
+        return ImportRequestsFrom(path, deleteFiles);
     }
 
     private static IList<Request> ImportRequestsFrom(string path, bool deleteFiles = true)
@@ -47,10 +47,17 @@ public static class RequestImportExportManager
     {
         var requests = RequestService.GetSpecialRequests(true, false, false, false);
         
-        return ExportRequests(requests);
+        return ExportRequests(requests, Status.InReview);
+    }
+
+    public static IList<string> ExportReviewedAndDeclinedRequests()
+    {
+        var requests = RequestService.GetSpecialRequests(false, false, true, true);
+        
+        return ExportRequests(requests, Status.Completed);
     }
     
-    private static IList<string> ExportRequests(IList<Request> requests)
+    private static IList<string> ExportRequests(IList<Request> requests, Status? newStatus = null)
     {
         var s = SettingsService.GetSettings();
 
@@ -68,14 +75,14 @@ public static class RequestImportExportManager
         return ExportRequestsTo(path, requests);
     }
     
-    private static IList<string> ExportRequestsTo(string path, IList<Request> requests)
+    private static IList<string> ExportRequestsTo(string path, IList<Request> requests, Status? newStatus = null)
     {
         var filesPaths = new List<string>();
         
         foreach (var request in requests)
         {
             var filePath = path + GenerateName(request);
-            RequestPrinter.PrintIntoFile(filePath, request, true);
+            RequestPrinter.PrintIntoFile(filePath, request, newStatus);
             
             filesPaths.Add(filePath);
         }
