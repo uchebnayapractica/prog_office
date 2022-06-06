@@ -16,6 +16,7 @@ namespace Office_1.UI.Commands
         public override void Execute(object parameter)
         {
             RequestImportExportManager.ExportCreatedRequests();
+            _mainWindowViewModel.AllRequests.GetRequestsCommand.Execute(null);
             MessageBox.Show("Успешно напечатаны в файлы новые заявки!");
 
         }

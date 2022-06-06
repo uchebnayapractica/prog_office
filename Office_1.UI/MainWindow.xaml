@@ -154,7 +154,7 @@
                 <TextBox Name ="ClientComboBox" Text="{Binding NewRequest.ClientName}" Grid.Column="2" Grid.Row="1" Margin="15, 15, 15, 15"/>
 
                 <Label Name ="ClientAdressLabel" Content="Адрес клиента:" Grid.Column="1" Grid.Row="2" Margin="10, 10, 10, 10" FontSize="15"/>
-                <TextBox Name ="ClientAdressTextBox" Text="{Binding NewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="15, 15, 15, 15" />
+                <TextBox Name ="ClientAdressTextBox"  TextWrapping="Wrap" Text="{Binding NewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="15, 15, 15, 15" />
 
                 <DataGrid x:Name="ClientsDataGrid" ItemsSource="{Binding NewRequest.Clients}" SelectedItem="{Binding NewRequest.SelectedItem}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="15, 15, 15, 15" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="True" ColumnWidth="*" AutoGenerateColumns="False">
                     <DataGrid.Columns>
@@ -170,10 +170,10 @@
                 <TextBox Name ="DirectorTextBox" Text="{Binding NewRequest.DirectorName}" Grid.Column="2" Grid.Row="5" Margin="15, 15, 15, 15"/>
 
                 <Label Name ="SubjectLabel" Content="Тема:" Grid.Column="1" Grid.Row="6" Margin="10, 10, 10, 10" FontSize="15"/>
-                <TextBox Name ="SubjectTextBox" Text="{Binding NewRequest.Subject}" Grid.Column="2" Grid.Row="6" Margin="15, 15, 15, 15"/>
+                <TextBox Name ="SubjectTextBox"  TextWrapping="Wrap" Text="{Binding NewRequest.Subject}" Grid.Column="2" Grid.Row="6" Margin="15, 15, 15, 15"/>
 
                 <Label Name ="ContentLabel" Content="Содержание:" Grid.Column="1" Grid.Row="7" Margin="10, 10, 10, 10" FontSize="15"/>
-                <TextBox Name ="ContentTextBox" Text="{Binding NewRequest.Content}" Grid.Column="2" Grid.Row="7" Margin="15, 15, 15, 15"/>
+                <TextBox Name ="ContentTextBox"  TextWrapping="Wrap" Text="{Binding NewRequest.Content}" Grid.Column="2" Grid.Row="7" Margin="15, 15, 15, 15"/>
 
             </Grid>
 
@@ -238,7 +238,7 @@
                 <Label Name ="ClientComboBoxView" Content="{Binding ViewRequest.ClientName}" Grid.Column="2" Grid.Row="1" Margin="5, 5, 5, 5"/>
 
                 <Label Name ="ClientAdressLabelView" Content="Адрес клиента:" Grid.Column="1" Grid.Row="2" Margin="5, 5, 5, 5" FontSize="15"/>
-                <Label Name ="ClientAdressTextBoxView" Content="{Binding ViewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="5, 5, 5, 5" />
+                <TextBlock Name ="ClientAdressTextBoxView"  TextWrapping="Wrap" Text="{Binding ViewRequest.ClientAddress}" Grid.Column="2" Grid.Row="2" Margin="5, 5, 5, 5" />
 
                 <Label Name ="DirectorLabelView" Content="Руководитель:" Grid.Column="1" Grid.Row="3" Margin="5, 5, 5, 5" FontSize="15"/>
                 <Label Name ="DirectorTextBoxView" Content="{Binding ViewRequest.DirectorName}" Grid.Column="2" Grid.Row="3" Margin="5, 5, 5, 5"/>
@@ -247,13 +247,13 @@
                 <Label Name ="SubjectTextBoxView" Content="{Binding ViewRequest.Subject}" Grid.Column="2" Grid.Row="4" Margin="5, 5, 5, 5"/>
 
                 <Label Name ="ContentLabelView" Content="Содержание:" Grid.Column="1" Grid.Row="5" Margin="5, 5, 5, 5" FontSize="15"/>
-                <Label Name ="ContentTextBoxView" Content="{Binding ViewRequest.Content}" Grid.Column="2" Grid.Row="5" Margin="5, 5, 5, 5"/>
+                <TextBlock Name ="ContentTextBoxView" TextWrapping="Wrap" Text="{Binding ViewRequest.Content}" Grid.Column="2" Grid.Row="5" Margin="5, 5, 5, 5"/>
 
                 <Label Name ="ResolutionLabelView" Content="Резолюция:" Grid.Column="1" Grid.Row="6" Margin="5, 5, 5, 5" FontSize="15"/>
-                <Label Name ="ResolutionTextBoxView" Content="{Binding ViewRequest.Resolution}" Grid.Column="2" Grid.Row="6" Margin="5, 5, 5, 5"/>
+                <TextBlock Name ="ResolutionTextBoxView"  TextWrapping="Wrap" Text="{Binding ViewRequest.Resolution}" Grid.Column="2" Grid.Row="6" Margin="5, 5, 5, 5"/>
 
                 <Label Name ="RemarkLabelView" Content="Ремарка:" Grid.Column="1" Grid.Row="7" Margin="5, 5, 5, 5" FontSize="15"/>
-                <Label Name ="RemarkTextBoxView" Content="{Binding ViewRequest.Remark}" Grid.Column="2" Grid.Row="7" Margin="5, 5, 5, 5"/>
+                <TextBlock Name ="RemarkTextBoxView"  TextWrapping="Wrap" Text="{Binding ViewRequest.Remark}" Grid.Column="2" Grid.Row="7" Margin="5, 5, 5, 5"/>
 
                 <Label Name ="StatusLabelView" Content="Статус:" Grid.Column="1" Grid.Row="8" Margin="5, 5, 5, 5" FontSize="15"/>
                 <Label Name ="StatusTextBoxView" Content="{Binding ViewRequest.StatusDefinition}" Grid.Column="2" Grid.Row="8" Margin="5, 5, 5, 5"/>

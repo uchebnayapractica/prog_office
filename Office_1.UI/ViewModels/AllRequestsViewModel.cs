@@ -26,7 +26,9 @@ namespace Office_1.UI.ViewModels
             GetRequestsCommand = new GetRequestsCommand(this);
 
             ShowNew = true;
-            ShowInReview = true;
+            ShowInReview = false;
+            ShowReviewed = true;
+            ShowDeclined = true;
         }
 
         public ObservableCollection<Request> Requests { get; set; }
