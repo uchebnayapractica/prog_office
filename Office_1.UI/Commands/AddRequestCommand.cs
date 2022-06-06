@@ -61,6 +61,7 @@ namespace Office_1.UI.Commands
 
                 //Обновляем список
                 _mainWindowViewModel.AllRequests.GetRequestsCommand.Execute(null);
+                MessageBox.Show("Успешно добавлено!");
                 _mainWindowViewModel.ChangeVisibleGridCommand.Execute(vm);
             }
             else
